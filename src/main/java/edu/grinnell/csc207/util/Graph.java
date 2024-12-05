@@ -483,6 +483,59 @@ public class Graph {
   } // path(String, String)
 
   /**
+   * Prints all vertices reachable from a starting vertex.
+   *
+   * @param pen
+   *   The pen to print the vertices.
+   * @param vertex
+   *   The vertex to start at.
+   */
+  public void reachableFrom(PrintWriter pen, int vertex) {
+    pen.println(vertex + ": " + vertexName(vertex));
+    this.mark(vertex);
+    for (Edge e : vertices[vertex]) {
+      if (!this.isMarked(e.target())) {
+        this.reachableFrom(pen, e.target());
+      } // if
+    } // for
+  } // reachableFrom(PrintWriter, int)
+
+  /**
+   * Returns an iterable that returns an iterator of all the vertices reachable from a vertex.
+   * 
+   * @param vertex
+   *  the provided starting vertex
+   * @return
+   *  an iterable
+   */
+  public Iterable<Integer> reachable(int vertex) {
+    return () -> {
+      return new Iterator<Integer>() {
+
+        Queue<Integer> vs = new LinkedList<Integer>();
+        //vs.add(vertex);
+
+        /**
+         * Determine if vertices remain.
+         */
+        public boolean hasNext() {
+          return (!vs.isEmpty());
+        } // hasNext()
+
+        /**
+         * Grab the next vertex.
+         */
+        public Integer next() {
+          int current = vs.remove();
+          for (Edge e : vertices[vertex]) {
+            vs.add(e.target());
+          }
+        } // next()
+      }; // new Iterator<Integer>
+    };
+  } //reachable(int)
+
+  /**
    * Get an iterable for the vertices.
    *
    * @return an iterable whose iterator method returns an iterator
