@@ -530,6 +530,7 @@ public class Graph {
           for (Edge e : vertices[vertex]) {
             vs.add(e.target());
           }
+          return current;
         } // next()
       }; // new Iterator<Integer>
     };
@@ -574,6 +575,27 @@ public class Graph {
       }; // new Iterator<Integer>
     };
   } // vertices()
+
+  /**
+   * An implementation for the Dijsktra’s algorithm.
+   * @param source
+   * @param sink
+   */
+  public void shortestPath(int source, int sink) {
+    int[] distance = new int[numVertices];
+    int[] path = new int[numVertices];
+    distance[source] = 0;
+    for (int i = 0; i < numVertices; i++) {
+      if (i != source) {
+        distance[i] = Integer.MAX_VALUE;
+      } //if
+    } //for
+
+    while (!this.isMarked(source)) {
+
+    } //
+
+  } //shortestPath(source, sink)
 
   // +----------+----------------------------------------------------
   // | Mutators |
