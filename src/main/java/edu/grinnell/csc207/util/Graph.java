@@ -583,7 +583,8 @@ public class Graph {
    */
   public void shortestPath(int source, int sink) {
     int[] distance = new int[numVertices];
-    int[] path = new int[numVertices];
+    int[] path = new int[numVertices]; // prevNode
+    List<Edge> shortestPaths = new List<Edge>[numVertices];
     distance[source] = 0;
     for (int i = 0; i < numVertices; i++) {
       if (i != source) {
@@ -591,8 +592,20 @@ public class Graph {
       } //if
     } //for
 
-    while (!this.isMarked(source)) {
+    while (!this.isMarked(sink)) {
+      int current = Integer.MAX_VALUE;
+      for (int i = 0; i < numVertices; i++) {
+        if ((distance[i] < current) && (!this.isMarked(i))) {
+          current = distance[i];
+        }
+      }
+      this.mark(current);
 
+      for (Edge e : this.edgesFrom(current)) {
+        if ((distance[current] + e.weight()) < distance[e.target()]) {
+          
+        }
+      }
     } //
 
   } //shortestPath(source, sink)
